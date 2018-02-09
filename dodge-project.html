@@ -7,115 +7,111 @@
     
     <script>
     
+    //here we set up variables and arrays
     var boxes = [];
     var characterX = 300;
     var characterY = 575;
     var rectX;
     var rectY;
-    /*var rectWidth = rectX+100;;
-    var rectHeight = rectY+50;*/
-    
+
         function setup() {
             createCanvas(600,600);
             
-             rectX = random(width);
-             rectY = random(10,450)
-             /*rectWidth = rectX+100;
-             rectHeight = rectY+50;*/
+             rectX = random(width); // the location of the rectangles
+             rectY = random(10,450); // are set to random
+
              
-             
-             for(var i = 0;i<10;i++){
-             boxes.push(new Box())
+             for(var i = 0;i<10;i++){ // this creates
+             boxes.push(new Box()) // ten rectangles in total
             }
         }
 
         function draw() {
             background(0);
-            fill(255)
-            textSize(20)
-            text("RULE: You cannot touch the boxes, you move with the arrow keys",13,20)
+            fill(255) // this displays the rules
+            textSize(20) // on the top of the screen
+            text("RULES: You cannot touch the boxes, you move with the arrow keys",13,20)
+            
             drawCharacter();
             collide();
             
 
-          for(var i=0; i<10; i++){
-          //fill("pink")
-          boxes[i].move();
-          boxes[i].display();
+          for(var i=0; i<10; i++){ // this creates ten rectangles in total
+          boxes[i].move(); // this makes the rectangles move
+          boxes[i].display(); // this displays the rectangles
         }
         }
         
         function Box(){
-            this.x = rectX;
+            this.x = random(width);
             this.y = random(10,450);
-            this.speed = random(1,4);
+            
+            this.speed = random(1,4); // this creates a random speed for each rectangle
             
             this.move = function(){
-            this.x += this.speed
-            if(this.x >= width){
+            this.x += this.speed // here we defined how
+            if(this.x >= width){ // the rectangles will move
                 this.x = 0;
                 }
             }
             
             this.display = function(){
-                fill(255,100,100)
-               // rectMode(CENTER)
-          rect(this.x,this.y,100,50);
-                
+            fill(255,100,100) // here we defined what the rectangles
+             rect(this.x,this.y,100,50); // will look like
             }
         }
         
         function drawCharacter(){
-            //
-            fill(159, 141, 211)
+            fill(159, 141, 211) // here is where we created the circle
             ellipse(characterX, characterY, 50, 50);
-            
-            if(characterX < 0 ){
-                characterX = 600
-            }
-            
-            if(characterY == 0){
-            }
         }
         
         function keyPressed(){
-            if(keyCode == RIGHT_ARROW){
-                characterX = characterX + 40
+            if(keyCode == RIGHT_ARROW){ //if the right arrow key is pressed the
+                characterX = characterX + 40 // circle will move right 40 pixels
             }
-            if(keyCode == LEFT_ARROW){
-                characterX = characterX - 40
+            
+            if(keyCode == LEFT_ARROW){ // if the left arrow key is pressed the
+                characterX = characterX - 40 //circle will move left 40 pixels
             }
-            if(keyCode == UP_ARROW){
-                characterY = characterY - 30
+            
+            if(keyCode == UP_ARROW){ // if the up arrow key is pressed the
+                characterY = characterY - 40 // circle will move up 40 pixels
             }
-            if(keyCode == DOWN_ARROW){
-                characterY = characterY + 40
+            
+            if(keyCode == DOWN_ARROW){ // if the down arrow key is pressed the
+                characterY = characterY + 40 // circle will move down 40 pixels
             } 
         }
         
         function collide(){
             
-            if(characterX < 0 ){
-                characterX = width
+            if(characterX < 0 ){ // if the circle goes past the left side of the screen
+                characterX = width // the circle will come back on the right side
             }
             
-            if(characterX > width){
-                characterX = 0
+            if(characterX > width){ // if the circle goes past the right side of the
+                characterX = 0 // screen the circle will come back on the left side
             }
             
-            if(characterY < 0){
-                characterX = width/2
-                characterY = 600
+            if(characterY < 0){ // if the circle goes past the top
+                characterX = width/2 // of the screen, the circle
+                characterY = 600 // will come back to the bottom
                 
             }
             
             
             
             for (var i = 0; i < boxes.length; i++){
+                
             if(characterY >= boxes[i].y && characterY <= boxes[i].y+50){
                 if(characterX >= boxes[i].x && characterX <= boxes[i].x+100){
+            
+            // if the circle is touching any point of any rectangle, the game will
+            // stop and "GAME OVER" will be displayed in the center of the screen
+                    
                     fill(255)
-                    textSize(24)
+                    textSize(30)
                     text("GAME OVER", 250,height/2);
                     noLoop()
                 }
